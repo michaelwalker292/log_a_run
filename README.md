@@ -11,7 +11,7 @@ Work with your pair to define a simple product vision based on the API or APIs y
 But what does this consist of in a more concrete way?
 
 1. Do a mini-inception to figure out what the project goals are
-1. Continue with mini-inception to figure out what roles (or personas), workflows, and activities are. Use notecars to begin drafting out what stories you need to work on (do not bother weighting them) and prioritize that work to work towards MVP.
+1. Continue with mini-inception to figure out what roles (or personas), workflows, and activities are. Use notecards to begin drafting out what stories you need to work on (do not bother weighting them) and prioritize that work to work towards MVP.
 1. Have a quick architecture discussion - how do you want to structure this application? Is it server-side rendering? Is it an API with SPA?
 
 If you want to take it a step further, go ahead and register a free [Pivotal Tracker](http://www.pivotaltracker.com/) account and create a project to track your work. Obviously you will need to have a shorter cycle around things like acceptance (and accept your own work), but it will at least be a good chance to get used to keeping the tool up to date.
