@@ -96,3 +96,37 @@ describe('Given a "log a run" app', function() {
     })
   })
 })
+describe('When user goes to /log-run with an id', function() {
+  it('Then it returns a 200', function(done) {
+    var user = {name: 'users name', email: 'email@email.com', password: 'password1'}
+
+    userCollection.insert(user).then(function(savedUser) {
+      request(app).get('/log-run/' + savedUser._id).expect(200,done)
+    })
+  })
+})
+describe('When i post to /log-run', function() {
+  it('Then it should successfully save the the run to the runs table', function(done) {
+    var user = {name: 'users name', email: 'email@email.com', password: 'password1'}
+
+    userCollection.insert(user)
+    .then(function(savedUser) {
+      var run = {userid: savedUser._id, name: 'run name', location: 'location of run', distance: '100', time: '200'}
+
+      return run
+    })
+    .then(function(run) {
+      request(app).post('/log-run/' + run.userid).send(run).then(function(response) {
+        runCollection.find({}, function(err, savedRuns)
+        {
+          expect(savedRuns[0].name).to.equal(run.name)
+          expect(savedRuns[0].location).to.equal(run.location)
+          expect(savedRuns[0].distance).to.equal(run.distance)
+          expect(savedRuns[0].time).to.equal(run.time)
+
+          done()
+        })
+      })
+    })
+  })
+})

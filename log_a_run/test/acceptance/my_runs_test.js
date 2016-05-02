@@ -10,16 +10,23 @@ var runCollection = db.get('runs')
 var server
 
 before(function () {
+  userCollection.remove({})
+  runCollection.remove({})
+
   server = http.createServer(require('../../app'))
   server.listen(0)
   browser.baseUrl = 'http://localhost:' + server.address().port
 })
 
 beforeEach(function () {
+  userCollection.remove({})
+  runCollection.remove({})
   browser.ignoreSynchronization = true
 })
 
 after(function () {
+  userCollection.remove({})
+  runCollection.remove({})
   server.close()
 })
 

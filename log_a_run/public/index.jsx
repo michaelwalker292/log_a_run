@@ -21,8 +21,8 @@ var MyRuns = React.createClass({
 
     var runs = userRuns.runs
 
-    var runrows = runs.map(function(element) {
-      return <RunRow data={element}/>
+    var runrows = runs.map(function(element, index) {
+      return <RunRow data={element} key={index} />
     })
 
     var url = '/log-run/' + this.props.userId
@@ -34,12 +34,16 @@ var MyRuns = React.createClass({
           <h3>List of Runs</h3>
           <table className="table table-striped">
             <thead>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Distance</th>
-              <th>Time</th>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Distance</th>
+                <th>Time</th>
+              </tr>
             </thead>
-            {runrows}
+            <tbody>
+              {runrows}
+            </tbody>
           </table>
         </div>
         <a id='logmyrun' href={url}>Log a Run</a>
@@ -100,6 +104,21 @@ var SignUp = React.createClass({
 })
 
 var LogRun = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault()
+
+    var run = {
+      userid: this.props.userId,
+      name: this.refs.name.value,
+      location: this.refs.location.value,
+      distance: this.refs.distance.value,
+      time: this.refs.time.value
+    }
+    return $.post('http://localhost:3000/log-run/' + this.props.userId, run, function(result) {
+      $(window.location).attr('href', '/my-runs/' + this.props.userId);
+
+    }.bind(this))
+  },
   render : function() {
     return (
       <div className='container'>
@@ -113,11 +132,11 @@ var LogRun = React.createClass({
             <label id='time_header'>Time</label>
           </div>
           <div className="col-md-1">
-            <input type='text' id='name'></input>
-            <input type='text' id='location'></input>
-            <input type='text' id='distance'></input>
-            <input type='text' id='time'></input>
-           <input type='submit' value='Log Run'/>
+            <input type='text' id='name' ref='name'></input>
+            <input type='text' id='location' ref='location'></input>
+            <input type='text' id='distance' ref='distance'></input>
+            <input type='text' id='time' ref='time'></input>
+           <input type='submit' id='submit' value='Log Run' onClick={this.handleSubmit}/>
           </div>
 
           </form>
