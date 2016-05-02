@@ -12,7 +12,9 @@ router.get('/:id', function(req, res) {
     return user
   })
   .then(function(user) {
-    runsCollection.find({userid: user._id}).then(function(runs){
+    var userId = user._id.toString()
+    
+    runsCollection.find({userid: userId}).then(function(runs) {
       var userwithruns = {user, runs}
 
       var output = JSON.stringify(userwithruns)
