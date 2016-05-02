@@ -96,20 +96,19 @@ describe('Given a log a run app', function() {
       confirm_password_input.sendKeys('password')
 
       register_button
-      .click()
-      .then(function(result) {
-        console.log(result);
-        userCollection.find({})
-        .then(function(savedUser) {
-            expect(savedUser[0].name).to.equal('User Name')
-            expect(savedUser[0].email).to.equal('email@email.com')
-            expect(savedUser[0].password).to.equal('password')
-          })
-          .then(browser.getCurrentUrl().then(function(url) {
-            //expect(url).to.equal(browser.baseUrl + '/my-runs')
-            done()
-          }))
+        .click()
+        .then(function(result) {
+          userCollection.find({})
+          .then(function(savedUser) {
+              expect(savedUser[0].name).to.equal('User Name')
+              expect(savedUser[0].email).to.equal('email@email.com')
+              expect(savedUser[0].password).to.equal('password')
+            })
+            .then(browser.getCurrentUrl().then(function(url) {
+              //expect(url).to.equal(browser.baseUrl + '/my-runs')
+              done()
+            }))
         })
+      })
     })
-  })
 })

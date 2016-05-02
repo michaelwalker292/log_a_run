@@ -87,11 +87,9 @@ describe('Given a "log a run" app', function() {
         .then(function(savedRun){
           request(app).get('/my-runs/' + savedRun.userid)
           .expect(function(response) {
-    console.log(response.body);
-            expect(response.body.user._id).to.equal(savedRun.userid.toString())
-            expect(response.body.runs[0]._id).to.equal(savedRun._id.toString())
-
-
+            var userRuns = JSON.parse(response.text);
+            expect(userRuns.user._id).to.equal(savedRun.userid.toString())
+            expect(userRuns.run[0]._id).to.equal(savedRun._id.toString())
           }).end(done)
         })
       })
