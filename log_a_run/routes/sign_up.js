@@ -8,7 +8,7 @@ var db = require('../config/database')
 var users = db.get('users')
 
 router.get('/', function(req, res, next) {
-  res.render('sign-up', {data: {}})
+  res.render('index', {data: {} })
 });
 
 router.post('/', function(req, res){

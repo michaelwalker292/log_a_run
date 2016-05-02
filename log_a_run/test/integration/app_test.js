@@ -130,3 +130,8 @@ describe('When i post to /log-run', function() {
     })
   })
 })
+describe('When user goes to /sign-in', function() {
+  it('Then it returns a 200', function(done) {
+    request(app).get('/sign-in').expect(200, done)
+  })
+})

@@ -11,7 +11,6 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.post('/:id', function(req, res){
-  console.log('======', req.body);
   runs.insert(req.body).then(function(savedRun){
     res.json(savedRun)
   })

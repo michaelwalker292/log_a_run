@@ -146,6 +146,16 @@ var LogRun = React.createClass({
   }
 })
 
+var LogIn = React.createClass({
+  render: function() {
+    return (
+      <div>
+        Hello
+      </div>
+    )
+  }
+})
+
 var App = React.createClass({
   render: function() {
     var Child
@@ -158,6 +168,9 @@ var App = React.createClass({
     }
     else if (this.props.route.indexOf('log-run') > -1) {
       Child = LogRun
+    }
+    else if (this.props.route.indexOf('sign-in') > -1) {
+      Child = LogIn
     }
     else {
       Child = Home
@@ -175,6 +188,11 @@ function render() {
   var route = window.location.pathname.substr(1)
   var userId = window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1)
 
+  if (userId.length < 24)
+  {
+    userId = ''
+  }
+console.log(userId);
   ReactDOM.render(
     <App route={route} userId={userId} />,
     document.getElementById('entry-point'))
