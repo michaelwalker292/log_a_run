@@ -95,7 +95,7 @@ describe('Given a "log a run" app', function() {
       })
     })
   })
-})
+
 describe('When user goes to /log-run with an id', function() {
   it('Then it returns a 200', function(done) {
     var user = {name: 'users name', email: 'email@email.com', password: 'password1'}
@@ -133,5 +133,29 @@ describe('When i post to /log-run', function() {
 describe('When user goes to /sign-in', function() {
   it('Then it returns a 200', function(done) {
     request(app).get('/sign-in').expect(200, done)
+  })
+})
+
+  describe('When user posts from /sign-in', function() {
+    it('Then it will return with a failure message if incorrect info is posted', function(done) {
+      request(app).post('/sign-in').send({}).then(function(response) {
+        expect(response.body).to.contain('Failure')
+
+        done()
+      })
+    })
+    it('Then it will return json with the user id', function(done) {
+      var user = {name: 'users name', email: 'email@email.com', password: 'password1'}
+
+      userCollection.insert(user)
+      .then(function(savedUser) {
+        var login = {email: 'email@email.com', password: 'password1'}
+        request(app).post('/sign-in').send(login).then(function(response) {
+          expect(response.body._id).to.equal(savedUser._id.toString())
+
+          done()
+        })
+      })
+    })
   })
 })

@@ -1,4 +1,5 @@
 'use strict'
+
 var Home = React.createClass({
   render: function() {
     return  (
@@ -147,10 +148,47 @@ var LogRun = React.createClass({
 })
 
 var LogIn = React.createClass({
+  getInitialState: function() {
+    return {
+      errorState: false
+    }
+  },
+  handleSubmit: function(e) {
+    e.preventDefault()
+
+    var login = {
+      email: this.refs.email.value,
+      password: this.refs.password.value
+    }
+    return $.post('http://localhost:3000/sign-in', login, function(result) {
+      if(result) {
+        $(window.location).attr('href', '/my-runs/' + result._id);
+      }
+      else {
+        this.setState(
+          {
+            errorState: true
+          }
+        )
+      }
+    }.bind(this))
+  },
   render: function() {
     return (
-      <div>
-        Hello
+        <div className='container'>
+          <h1 id='header'>Log-in</h1>
+          <label id='error' className={!this.state.errorState ? 'invisible' : 'alert alert-danger fade in'}>Could not log-in, please try again.</label>
+          <div className="row">
+            <div className="col-md-1">
+              <label id='email_label'>Email</label>
+              <label id='password_label'>Password</label>
+            </div>
+            <div className="col-md-1">
+              <input id='email' type='email' ref='email' />
+              <input id='password' type='password' ref='password'/>
+              <input id='submit' type='submit' onClick={this.handleSubmit} />
+          </div>
+        </div>
       </div>
     )
   }
